@@ -73,6 +73,10 @@ Route::get('/manage_product2', function() {
     return view('pages/admin/manage_product2');
 });
 
+Route::middleware('auth')->group(function () {
+    Route::get('/home_page', [ProductController::class, 'tampilHome'])->name('home_page');
+    // route lain untuk pembeli yang butuh login
+});
 
 Route::get('/register', [AuthController::class, 'tampilRegister'])->name('tampilRegister');
 Route::post('/register', [AuthController::class, 'dataRegister'])->name('dataRegister');
@@ -81,6 +85,7 @@ Route::get('/login', [AuthController::class, 'tampilLogin'])->name('tampilLogin'
 Route::post('/login', [AuthController::class, 'dataLogin'])->name('dataLogin');
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
@@ -117,9 +122,9 @@ Route::get('/cart/clear', [CartController::class, 'clearCart'])->name('cart.clea
 Route::get('/checkout', [CartController::class, 'checkout'])->name('checkout');
 
 
-//Admin route//
+// routes/web.php
 Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/dashboard', fn () => view('admin.dashboard'));
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
 
 Route::get('/inbox', [InboxController::class, 'index'])->name('inbox');

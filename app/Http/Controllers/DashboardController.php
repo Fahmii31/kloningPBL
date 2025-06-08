@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        // Data penjualan per bulan
+        // Data statis penjualan per bulan (contoh)
         $salesData = [
             'Jan' => 5000,
             'Feb' => 6200,
@@ -24,18 +26,22 @@ class DashboardController extends Controller
             'Dec' => 10500,
         ];
 
-        // Data statistik lainnya
-        $totalUsers = 40689;
-        $totalOrders = 10293;
+        // Jika kamu sudah punya model Order dan User, kamu bisa aktifkan ini untuk data dinamis:
+        // $totalUsers = User::count();
+        // $totalOrders = Order::count();
+        // $totalSales = Order::sum('total_price');
+
+        // Sebagai contoh saya tetap buat variabel agar view tidak error
+        $totalUsers = 40689; 
+        $totalOrders = 10293; 
         $totalSales = 89000;
 
-        // Return view dengan data + active_menu
         return view('pages.admin.dashboard', [
-            'salesData' => $salesData,
-            'totalUsers' => $totalUsers,
+            'salesData'   => $salesData,
+            'totalUsers'  => $totalUsers,
             'totalOrders' => $totalOrders,
-            'totalSales' => $totalSales,
-            'active_menu' => 'dashboard'  
+            'totalSales'  => $totalSales,
+            'active_menu' => 'dashboard'
         ]);
     }
 }

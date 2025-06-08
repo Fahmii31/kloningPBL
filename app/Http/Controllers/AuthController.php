@@ -9,70 +9,72 @@ use App\Models\User;
 
 class AuthController extends Controller
 {
-    // Menampilkan halaman register
+    // ======================= REGISTER =========================
+
     public function tampilRegister() {
         return view('auth.register');
     }
 
-    // Proses data register
     public function dataRegister(Request $request) 
-{
-    $request->validate([
-        'email' => 'required|email|max:100',
-        'password' => 'required|min:8|max:50',
-    ]);
+    {
+        $request->validate([
+            'email' => 'required|email|max:100|unique:users,email',
+            'password' => 'required|string|min:8|max:50',
+        ]);
 
-    // Cek apakah email sudah terdaftar
-    if (User::where('email', $request->email)->exists()) {
-        return back()->with('failed', 'Email sudah terdaftar');
+        $user = User::create([
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'role' => 'pembeli',
+            'status' => 'active',
+        ]);
+
+        // Optional: langsung login pembeli
+        Auth::login($user);
+
+        return redirect()->route('tampilLogin')->with('success', 'Registrasi berhasil, silakan login');
     }
 
-    // Buat user baru dengan password bcrypt dan role pembeli, status active
-    $user = User::create([
-        'email' => $request->email,
-        'password' => bcrypt($request->password),
-        'role' => 'pembeli',
-        'status' => 'active',
-    ]);
+    // ======================= LOGIN =========================
 
-    // Login otomatis user setelah register
-    Auth::login($user);
-
-    // Setelah register, redirect ke halaman login
-    return redirect()->route('tampilLogin')->with('success', 'Registrasi berhasil, silakan login');
-}
-
-    // Menampilkan halaman login
     public function tampilLogin() {
         return view('auth.login');
     }
 
-    // Proses data login
     public function dataLogin(Request $request)
     {
         $request->validate([
-            'email' => 'required|string|max:100',
-            'password' => 'required|max:50'
+            'email' => 'required|email|max:100',
+            'password' => 'required|string|max:50'
         ]);
 
-        $user = User::where('email', $request->email)->first();
+        $credentials = $request->only('email', 'password');
 
-        if ($user && Hash::check($request->password, $user->password)) {
-            Auth::login($user);
-            // Cek berhasil login
-            if ($user->role === 'pembeli') {
-                return redirect('/home_page');
-            } else {
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+
+            // Tambahan: hanya user aktif yang bisa login
+            if ($user->status !== 'active') {
+                Auth::logout();
+                return back()->with('failed', 'Akun Anda tidak aktif');
+            }
+
+            // Arahkan berdasarkan role
+            if ($user->role === 'admin') {
                 return redirect('/dashboard');
             }
-        } else {
-            return back()->with('failed', 'Email atau kata sandi salah');
+
+            return redirect('/home_page');
         }
+
+        return back()->with('failed', 'Email atau kata sandi salah');
     }
 
-    // Menampilkan halaman logout
-    public function logout() {
+    // ======================= LOGOUT =========================
+
+    public function logout()
+    {
         Auth::logout();
-        return redirect()->route('tampilLogin')->with('success', 'Anda telah berhasil logout');
+        return redirect()->route('tampilLogin')->with('success', 'Anda telah logout');
     }
 }

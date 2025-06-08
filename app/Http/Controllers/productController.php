@@ -23,11 +23,11 @@ class ProductController extends Controller
     public function showCategory($categoryCode)
     {
         $products = Product::where('category_code', $categoryCode)
-                           ->whereHas('category', function($query) {
-                               $query->where('status', 'ON');
-                           })
-                           ->with(['merk', 'category'])
-                           ->get();
+            ->whereHas('category', function ($query) {
+                $query->where('status', 'ON');
+            })
+            ->with(['merk', 'category'])
+            ->get();
 
         return view('pages.pembeli.category', compact('products', 'categoryCode'));
     }
@@ -36,8 +36,8 @@ class ProductController extends Controller
     public function show($code_product)
     {
         $product = Product::with(['merk', 'category'])
-                          ->where('code_product', $code_product)
-                          ->firstOrFail();
+            ->where('code_product', $code_product)
+            ->firstOrFail();
 
         return view('pages.pembeli.detail_product', compact('product'));
     }
