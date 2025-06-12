@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="//unpkg.com/alpinejs" defer></script>
+
+</head>
+<body>
+    <div class="actions hidden md:flex items-center gap-8">
+            <div class="search-box relative flex items-center bg-[#e8dedd] rounded px-3 py-1">
+                <input type="text" id="search" placeholder="What are you looking for?"
+                    class="bg-transparent border-none text-sm placeholder-gray-500 w-48 px-2 py-1 focus:outline-none" />
+                <i class='bx bx-search icon absolute right-2 text-base text-black'></i>
+            </div>
+
+            <div class="nav-icon flex items-center gap-6 text-xl text-black">
+                <a href="{{ route('cart') }}"><i class='bx bx-cart-alt'></i>
+                <span class="absolute top-0 right-0 h-5 w-5 bg-red-500 text-white rounded-full flex items-center justify-center text-xs">2</span>
+            </a>
+                
+                <a href="javascript:void(0);" onclick="toggleDropdown()"><i class='bx bx-user'></i></a>
+            </div>
+        </div>
+        <div class="flex items-center space-x-4 md:space-x-6">
+            <!-- Notifikasi -->
+            <div class="relative mx-2 sm:mx-4">
+                <button class="flex text-gray-700 focus:outline-none">
+                    <i class="fas fa-bell text-xl"></i>
+                    <span class="absolute top-0 right-0 h-5 w-5 bg-red-500 text-white rounded-full flex items-center justify-center text-xs">2</span>
+                </button>
+            </div>
+            <div class="nav-icon flex items-center gap-6 text-xl text-black">
+    <a href="{{ route('cart') }}" class="relative">
+        <i class='bx bx-cart-alt'></i>
+        <span class="absolute -top-2 -right-2 h-5 w-5 bg-red-500 text-white rounded-full flex items-center justify-center text-xs">2</span>
+    </a>
+
+    <a href="javascript:void(0);" onclick="toggleDropdown()"><i class='bx bx-user'></i></a>
+</div>
+
+</body>
+</html>
+
