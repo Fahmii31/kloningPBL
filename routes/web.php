@@ -73,12 +73,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/home_page', [ProductController::class, 'tampilHome'])->name('home_page');
     // route lain untuk pembeli yang butuh login
 });
-<<<<<<< Updated upstream
-=======
 
 Route::get('/register', [AuthController::class, 'tampilRegister'])->name('register');
->>>>>>> Stashed changes
-
 Route::post('/register', [AuthController::class, 'dataRegister'])->name('dataRegister');
 
 Route::get('/login', [AuthController::class, 'tampilLogin'])->name('login');
@@ -94,8 +90,6 @@ Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])->
 Route::get('/reset-password/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
 Route::post('/reset-password', [NewPasswordController::class, 'store'])->name('password.update');
 
-=======
->>>>>>> Stashed changes
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
@@ -134,12 +128,7 @@ Route::get('/checkout', [CheckoutController::class, 'showCheckoutPage'])->name('
 Route::post('/checkout/submit', [CheckoutController::class, 'checkout'])->name('checkout.submit');
 
 
-<<<<<<< Updated upstream
-=======
 
-
-
->>>>>>> Stashed changes
 // routes/web.php
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -180,9 +169,6 @@ Route::get('/stock/{category}/{merk}', [StockController::class, 'showByMerk'])->
 //Route::put('admin/manage_stock/{id}', [StockController::class, 'update'])->name('stock.update');
 Route::put('/stock/update/{id}', [StockController::class, 'updateSingle'])->name('stock.updateSingle');
 Route::delete('/manage_product/{code_product}', [SellerController::class, 'destroy'])->name('manage_product.destroy');
-
-
-
 
 
 //category
