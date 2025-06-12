@@ -49,14 +49,12 @@
       <!-- Add to Cart Section -->
       <form action="{{ route('cart.add', ['code_product' => $product->code_product]) }}" method="POST" class="flex items-center gap-4">
         @csrf
-        
         <div class="flex items-center border border-gray-400 rounded overflow-hidden">
           <button type="button" class="sub px-4 py-2 text-xl cursor-pointer hover:bg-gray-100">−</button>
           <div class="value w-12 text-center border-l border-r border-gray-400 py-2">1</div>
           <button type="button" class="add px-4 py-2 text-xl cursor-pointer bg-blue-500 hover:bg-blue-600 text-white">+</button>
         </div>    
         <input type="hidden" name="quantity" id="quantity-input" value="1">
-        
         <button type="submit" class="w-full sm:w-40 bg-blue-500 text-white px-6 py-3 rounded hover:bg-blue-600 text-center">
           Add To Cart
         </button>

@@ -9,6 +9,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DetailproductController;
 use App\Http\Controllers\viewAllController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
@@ -72,21 +73,29 @@ Route::middleware('auth')->group(function () {
     Route::get('/home_page', [ProductController::class, 'tampilHome'])->name('home_page');
     // route lain untuk pembeli yang butuh login
 });
+<<<<<<< Updated upstream
+=======
 
-Route::get('/register', [AuthController::class, 'tampilRegister'])->name('tampilRegister');
+Route::get('/register', [AuthController::class, 'tampilRegister'])->name('register');
+>>>>>>> Stashed changes
+
 Route::post('/register', [AuthController::class, 'dataRegister'])->name('dataRegister');
 
-Route::get('/login', [AuthController::class, 'tampilLogin'])->name('tampilLogin');
+Route::get('/login', [AuthController::class, 'tampilLogin'])->name('login');
+//Route::get('/login', [AuthController::class, 'tampilLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'dataLogin'])->name('dataLogin');
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+<<<<<<< Updated upstream
 Route::get('/forgot-password', [PasswordResetLinkController::class, 'create'])->name('password.request');
 Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])->name('password.email');
 
 Route::get('/reset-password/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
 Route::post('/reset-password', [NewPasswordController::class, 'store'])->name('password.update');
 
+=======
+>>>>>>> Stashed changes
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
@@ -94,7 +103,7 @@ Route::middleware('auth')->group(function () {
 });
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::post('/contact/send', [ContactController::class, 'send'])->name('contact.send');
-Route::get('/detail_product', [DetailproductController::class, 'detail'])->name('detail_product');;
+//Route::get('/detail_product', [DetailproductController::class, 'detail'])->name('detail_product');;
 Route::get('/productAdmin', [ProductAdminController::class, 'tampilProduk'])->name('produkAdmin');;
 //Route::get('/cart', [CartController::class, 'index'])->name('cart'); gk dipakai
 //Route::get('/checkout', [CartController::class, 'checkout'])->name('checkout'); gk dipakai
@@ -117,12 +126,20 @@ Route::get('/kategori/{category}', [ProductController::class, 'showCategory'])->
 // cart and checkout
 Route::post('/cart/add/{code_product}', [CartController::class, 'addToCart'])->name('cart.add'); 
 Route::get('/cart', [CartController::class, 'showCart'])->name('cart'); 
-//Route::put('/cart/update/{productId}', [CartController::class, 'updateCart'])->name('cart.update'); // Update keranjang
-//Route::delete('/cart/remove/{productId}', [CartController::class, 'removeFromCart'])->name('cart.remove'); // Hapus produk dari keranjang
-//Route::get('/cart/clear', [CartController::class, 'clearCart'])->name('cart.clear'); // Hapus semua produk
-//Route::get('/checkout', [CartController::class, 'checkout'])->name('checkout');
+Route::put('/cart/update/{code_product}', [CartController::class, 'updateCart'])->name('cart.update'); // Update keranjang
+Route::delete('/cart/remove/{code_product}', [CartController::class, 'removeFromCart'])->name('cart.remove'); // Hapus produk dari keranjang
+Route::get('/cart/clear', [CartController::class, 'clearCart'])->name('cart.clear'); // Hapus semua produk
+Route::post('/cart/checkout-preview', [CartController::class, 'goToCheckout'])->name('checkout.preview');
+Route::get('/checkout', [CheckoutController::class, 'showCheckoutPage'])->name('checkout.page');
+Route::post('/checkout/submit', [CheckoutController::class, 'checkout'])->name('checkout.submit');
 
 
+<<<<<<< Updated upstream
+=======
+
+
+
+>>>>>>> Stashed changes
 // routes/web.php
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -192,7 +209,7 @@ Route::delete('admin/merk/{merk}', [MerkController::class, 'destroy'])->name('me
 Route::patch('admin/merk/{merk}/status', [MerkController::class, 'updateStatus'])->name('merk.updateStatus');
 
 
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::group(['middleware' => ['auth', 'check_role:admin']], function() {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

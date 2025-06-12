@@ -40,7 +40,7 @@
         </form>
 
         <p class="mt-4 text-sm text-center text-gray-700">Already have an account?
-            <a href="{{ route('tampilLogin') }}" class="text-blue-600 underline">Login</a>
+            <a href="{{ route('login') }}" class="text-blue-600 underline">Login</a>  
         </p>
     </div>
 </section>

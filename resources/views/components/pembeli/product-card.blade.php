@@ -14,7 +14,7 @@
     </div>
 
     <button class="w-full bg-[#373D49] text-white py-1.5 text-sm rounded-none mt-3"
-            onclick="addToCart({{ $product->code_product }})">
+            onclick="addToCart('{{ $product->code_product }}')">
         Add to Cart
     </button>
 
@@ -27,26 +27,39 @@
 </div>
 
 <script>
-    function addToCart(productId) {
-        fetch(`/cart/add/${productId}`, {
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                'Accept': 'application/json',
-            },
-        })
-        .then(response => {
-            if (!response.ok) {
-                return response.json().then(err => { throw new Error(err.message || 'Gagal tambah ke keranjang'); });
+function addToCart(codeProduct) {
+    fetch(`/cart/add/${codeProduct}`, {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ quantity: 1 })
+    })
+    .then(response => {
+        if (response.status === 401) {
+            // Belum login
+            window.location.href = "{{ route('login') }}";
+            return;
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data && data.message) {
+            alert(data.message); // Bisa diganti SweetAlert/Toastify
+        }
+
+        if (data && data.cartCount !== undefined) {
+            const cartSpan = document.querySelector("#cart-count");
+            if (cartSpan) {
+                cartSpan.textContent = data.cartCount;
             }
-            return response.json();
-        })
-        .then(data => {
-            alert(data.message || 'Berhasil ditambahkan ke keranjang!');
-        })
-        .catch(error => {
-            console.error(error);
-            alert(error.message || 'Terjadi kesalahan saat menambahkan produk.');
-        });
-    }
+        }
+    })
+    .catch(error => {
+        console.error(error);
+        alert("Terjadi kesalahan saat menambahkan ke keranjang.");
+    });
+}
 </script>

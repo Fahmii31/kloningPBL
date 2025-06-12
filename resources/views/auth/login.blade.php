@@ -41,12 +41,14 @@
 
             <div class="flex justify-between space-x-4 items-center w-full">
                 <button type="submit" class="bg-[#70B9EA] text-white py-3 px-5 w-32 rounded-md text-center text-sm hover:bg-blue-600 transition-colors">Login</button>
+
                 <a href="{{ route('password.request') }}" class="text-black hover:underline">Forgot Password?</a>
+
             </div>
         </form>
 
         <p class="mt-4 text-sm text-gray-700"> Don't have an account?
-            <a href="{{ route('tampilRegister') }}" class="text-blue-600 underline">Register</a>
+            <a href="{{ route('register') }}" class="text-blue-600 underline">Register</a>
         </p>
     </div>
 </section>
