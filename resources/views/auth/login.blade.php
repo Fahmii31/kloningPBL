@@ -41,7 +41,7 @@
 
             <div class="flex justify-between space-x-4 items-center w-full">
                 <button type="submit" class="bg-[#70B9EA] text-white py-3 px-5 w-32 rounded-md text-center text-sm hover:bg-blue-600 transition-colors">Login</button>
-                <a href="/forget_password1" class="text-black hover:underline">Forget Password?</a>
+                <a href="{{ route('password.request') }}" class="text-black hover:underline">Forgot Password?</a>
             </div>
         </form>
 

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Password;
 
 // Namespace Pembeli
 use App\Http\Controllers\AuthController;
@@ -12,6 +13,8 @@ use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\NewPasswordController;
+use App\Http\Controllers\PasswordResetLinkController;
 
 // Namespace Penjual
 use App\Http\Controllers\DashboardController;
@@ -49,14 +52,6 @@ Route::get('/orderList', function(){
     return view('pages/pembeli/orderList');
 });
 
-Route::get('/forget_password1', function() {
-    return view('pages/pembeli/forget_password1');
-});
-
-Route::get('/forgot_password2', function() {
-    return view('pages/pembeli/forgot_password2');
-});
-
 Route::get('/productAdmin', function() {
     return view('pages/admin/productAdmin');
 });
@@ -85,6 +80,12 @@ Route::get('/login', [AuthController::class, 'tampilLogin'])->name('tampilLogin'
 Route::post('/login', [AuthController::class, 'dataLogin'])->name('dataLogin');
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::get('/forgot-password', [PasswordResetLinkController::class, 'create'])->name('password.request');
+Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])->name('password.email');
+
+Route::get('/reset-password/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
+Route::post('/reset-password', [NewPasswordController::class, 'store'])->name('password.update');
 
 
 Route::middleware('auth')->group(function () {
